@@ -22,3 +22,12 @@ typedef struct
 	int faim = INTIT_CARACT;
 	int hygiene = INTIT_CARACT;	 
 } CARACT;
+
+
+void supprimerPersonnage(FILE* fichier);
+void lister(FILE *fichier);
+void affiche(FILE *fichier);
+void afficherpersonnage(PERSONNAGE*personnage);
+void fermer(FILE*fichier_ouvert);
+void ajout(FILE *fichier);
+FILE*ouvrir(char*nom_fichier);
