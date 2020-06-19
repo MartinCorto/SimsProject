@@ -1,92 +1,150 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "image.h"
-#include "fourier.h"
+#include "BmpLib.h"
+#include "Personnage.h"
+#include "GestionEvenements.h"
 
-void printMenu(void);
 
-int main(void)
+void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/);
+
+int main(int argc, char **argv)
 {
+	/* Initialisation des fichiers du programme */
+	FILE*fichier_personnages=NULL;
+	//~ FILE*fichier_keywords=NULL;
+	//~ FILE*fichier_mail=NULL;
+	//~ FILE*fichier_mailEnvoyes=NULL;
 
-    
-    int exit = 0;
-	char choix;
+	/* Ouverture des fichiers du programme */
+	fichier_personnages = ouvrir("fichier_peronnages.bin");
+	//~ fichier_keywords = ouvrirReponse("reponses.bin");
+	//~ fichier_mail = ouvrir("mailsRecu.bin");
+	//~ fichier_mailEnvoyes = ouvrir("mailsEnvoyes.bin");
 	
+	menuGeneral(fichier_personnages/*, fichier_keywords, fichier_mail, fichier_mailEnvoyes*/);
 	
-	float l_periode_traceCarre1 = 0;
-	float l_amplitude_traceCarre1 = 0;
-	int l_nbPeriode_traceCarre1 = 0;
+	/* Fermeture des fichiers du programme */
+	fermer(fichier_personnages);
+	//~ fermer(fichier_keywords);
+	//~ fermer(fichier_mail);
+	//~ fermer(fichier_mailEnvoyes);
+	
+	return 0;
+}
 
-	float l_periode_traceCarre2 = 0;
-	float l_amplitude_traceCarre2 = 0;
-	int l_nbPeriode_traceCarre2 = 0;
 
-	int l_boolenCouleur = 2;
-	while( exit == 0 )
+/* Fonction gérer les évènements des touches appuyées */
+void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/)
+{
+	//~ double start = clock(); début cpt temps
+	//~ double stop = clock(); fin cpt temps   stop-start = tps écoulé
+	
+	char choixGeneral;
+	do
 	{
-		printMenu();
-		scanf(" %c",&choix);
-		switch(choix)
+		printf("\tChoix du mode d'utilisation :\n");
+		printf("\t1 : administrateur | 2 utilisateur \n");
+		printf("\tQuitter................................: Q\n");
+		printf(" Votre choix: ");
+		scanf("%c",&choixGeneral);
+		getchar();
+		
+		switch(choixGeneral)
 		{
-			case '0':
-			case 'O':
-			case 'o':
-				exit = 1;
-				break;
-			
-			case '1':
-				printf("Axes Simple taille fixe 1200*1200\n");
-				Image *imgRepere = initialiseRepereCentre(1200,1200);
-				sauveImage(imgRepere,"axes.bmp");
-				libereImage(&imgRepere);
+			case '1': 
+				printf("\t\tMODE ADMINISTRATEUR\n");
+				char choixAdminMode;
+				printf("Ajouter une nouvelle coordonnees............: A\n");
+				printf("Consultation d'une coordonnees..............: C\n");
+				printf("Lister toutes les coordonnees...............: L\n");
+				
+				printf("Creer un new event............: B\n");
+				printf("Consultation d'un event..............: Z\n");
+				printf("Lister tout les events...............: K\n");
+				//~ printf("Supprimer les coordonnees d'un client.......: S\n");
+				
+				//~ printf("Ajouter une nouvelle reponse................: R\n");
+				//~ printf("Consultation d'une reponse..................: F\n");
+				//~ printf("Lister toutes les reponses..................: D\n");
+				//~ printf("Quitter et revenir au menu antérieur........: Q\n");
+				printf(" votre choix: ");
+
+				scanf("%c",&choixAdminMode);
+				getchar();
+				switch(choixAdminMode)
+				{
+					case 'a':
+					case 'A':
+						ajout(fichier_personnages);
+					break;
+					
+					case 'c':
+					case 'C':
+						affiche(fichier_personnages);
+					break;
+					
+					case 'l':
+					case 'L':
+						lister(fichier_personnages);
+					break;
+					
+					//~ case 'b':
+					//~ case 'B':
+						//~ ajout(fichier_personnages);
+					//~ break;
+					
+					//~ case 'z':
+					//~ case 'Z':
+						//~ affiche(fichier_personnages);
+					//~ break;
+					
+					//~ case 'k':
+					//~ case 'k':
+						//~ lister(fichier_personnages);
+					//~ break;
+					
+					//~ case 's':
+					//~ case 'S':
+						//~ supprimerCoordonnes(fichier_coordonnes);
+						//~ printf("Fonctionnalité en cours de développement\n");
+					//~ break;
+					
+					//~ case 'r':
+					//~ case 'R':
+						//~ ajoutReponse(fichier_keywords);
+					//~ break;
+					
+					//~ case 'f':
+					//~ case 'F':
+						//~ afficheReponse(fichier_keywords);
+					//~ break;
+					
+					//~ case 'd':
+					//~ case 'D':
+						//~ listerReponse(fichier_keywords);
+					//~ break;
+				}
 				break;
 			
 			case '2':
-				l_boolenCouleur = saisirCouleurBooleen();
-				printf("Couleur choisie %d\n", l_boolenCouleur);
-				break;
-				
-			case '3':
-				l_periode_traceCarre1 = saisirPeriode();
-				l_amplitude_traceCarre1 = saisirAmplitude();
-				l_nbPeriode_traceCarre1 = saisirNbPeriode();
-				
-				Image *ImageCarre1 = traceCarre1(l_amplitude_traceCarre1, l_periode_traceCarre1, l_nbPeriode_traceCarre1);
-				sauveImage(ImageCarre1,"carre1.bmp");
-				libereImage(&ImageCarre1);
-				break;
+				printf("\tMODE UTILISATEUR\n");
+				//~ email mail;
+				//~ mail = saisieMail(fichier_mail);
+				//~ afficherMail(&mail);
+				//~ envoiReponseMail(fichier_keywords, mail, fichier_mailEnvoyes);
 
-			case '4':	
-				l_periode_traceCarre2 = saisirPeriode();
-				l_amplitude_traceCarre2 = saisirAmplitude();
-				l_nbPeriode_traceCarre2 = saisirNbPeriode();
-				l_boolenCouleur = saisirCouleurBooleen();
-				
-				Image *ImageCarre2 = traceCarre2(l_amplitude_traceCarre2, l_periode_traceCarre2, l_nbPeriode_traceCarre2, l_boolenCouleur);
-				sauveImage(ImageCarre2,"carre2.bmp");
-				libereImage(&ImageCarre2);
 				break;
-
+				
+			case 'q':
+			case 'Q':
+				printf("Porgramme fermé\n");
+				break;
+				
 			default :
-				printf("Commande inconnue\n");
+				printf("Commande inconnu [%c]\n",choixGeneral);
 				break;
 		}
-	}
-
-return 0;
+		printf("\n\n");
+	}while (choixGeneral != 'q' && choixGeneral != 'Q');
 }
 
-/*
-Permet d'afficher un menu textuel
-param : void
-return : void
-*/
-void printMenu(void)
-{
-	printf("  -- Menu --\n");
-	printf(" 0 - Exit\n");
-	printf(" 1 - Creer axes\n");
-	printf(" 2 - Test choix de la couleur\n");
-	printf(" 3 - Trace carre1 \n");
-	printf(" 4 - Trace carre2 \n");
-}

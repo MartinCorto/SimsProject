@@ -5,19 +5,25 @@
 
 typedef struct evt
 {
-	int id_emet;
-	int id_dest;
-	int type_act;
-	int t_evt;
-	/* autres info suivant système */
-	struct evt * suiv;
+	char nom_;
+	int duree_evt;
+	int prix;
 } EVT;
+
 
 
 typedef struct
 {
-	int t_cour;
+	char nom_lieu[];
+	EVT * action;
 	int nb_evt;
-	EVT * debut;
-	/* autres informations suivant système*/
-} ECH;
+} LIEU;
+
+//~ void afficheListeEvent(EVT *liste);
+//~ void afficheElementEvent(EVT *event);
+
+//~ void ajouterEvenement(FILE *fichier_evenement);
+//~ EVT*insertionAlphaEvent(EVT *liste, EVT *nouvelElement);
+
+//~ FILE*ouvrirEvenements(char*nom_fichier);
+//~ void fermerEvenements(FILE*fichier_ouvert);
