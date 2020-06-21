@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
 #include "BmpLib.h"
 #include "Personnage.h"
 #include "GestionEvenements.h"
@@ -9,25 +11,62 @@ void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fich
 
 int main(int argc, char **argv)
 {
-	/* Initialisation des fichiers du programme */
-	FILE*fichier_personnages=NULL;
-	//~ FILE*fichier_keywords=NULL;
-	//~ FILE*fichier_mail=NULL;
-	//~ FILE*fichier_mailEnvoyes=NULL;
+	printf("hello\n\n");
+	//~ /* Initialisation des fichiers du programme */
+	//~ FILE*fichier_personnages=NULL;
 
-	/* Ouverture des fichiers du programme */
-	fichier_personnages = ouvrir("fichier_peronnages.bin");
-	//~ fichier_keywords = ouvrirReponse("reponses.bin");
-	//~ fichier_mail = ouvrir("mailsRecu.bin");
-	//~ fichier_mailEnvoyes = ouvrir("mailsEnvoyes.bin");
+	//~ /* Ouverture des fichiers du programme */
+	//~ fichier_personnages = ouvrir("fichier_peronnages.bin");
+
 	
-	menuGeneral(fichier_personnages/*, fichier_keywords, fichier_mail, fichier_mailEnvoyes*/);
+	//~ menuGeneral(fichier_personnages);
 	
-	/* Fermeture des fichiers du programme */
-	fermer(fichier_personnages);
-	//~ fermer(fichier_keywords);
-	//~ fermer(fichier_mail);
-	//~ fermer(fichier_mailEnvoyes);
+	//~ /* Fermeture des fichiers du programme */
+	//~ fermer(fichier_personnages);
+	
+	initialisationEvenements();
+	
+	char choixGeneral;
+	do
+	{
+		
+		
+		
+		printf("\tChoix du mode d'utilisation :\n");
+		printf("\t1 : temps \n");
+		printf("\tQuitter................................: Q\n");
+		printf(" Votre choix: ");
+		scanf("%c",&choixGeneral);
+		getchar();
+		
+		switch(choixGeneral)
+		{
+			
+			
+			case '1':
+				//~ unsigned long begin = time( NULL );
+    
+				//~ // Do something
+				//~ sleep( 2 );   // Is a POSIX function - defined in <unistd.h>
+				
+				//~ unsigned long end = time( NULL);
+				//~ unsigned long secondes = (unsigned long) difftime( end, begin );
+				//~ printf( "Finished in %ld sec\n", secondes ); 
+				break;
+				
+			case 'q':
+			case 'Q':
+				printf("Porgramme fermé\n");
+				break;
+				
+			default :
+				printf("Commande inconnu [%c]\n",choixGeneral);
+				break;
+		}
+		printf("\n\n");
+	}while (choixGeneral != 'q' && choixGeneral != 'Q');
+	
+
 	
 	return 0;
 }
