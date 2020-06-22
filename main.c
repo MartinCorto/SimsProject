@@ -58,11 +58,11 @@ void menuGeneral()
 				printf("Ajouter une nouvelle coordonnees............: A\n");
 				printf("Consultation d'une coordonnees..............: C\n");
 				printf("Lister toutes les coordonnees...............: L\n");
-				
+				printf("Supprimer les coordonnees d'un client.......: S\n");
 				printf("Creer un new event............: B\n");
 				printf("Consultation d'un event..............: Z\n");
 				printf("Lister tout les events...............: K\n");
-				//~ printf("Supprimer les coordonnees d'un client.......: S\n");
+				//~ 
 				
 				//~ printf("Ajouter une nouvelle reponse................: R\n");
 				//~ printf("Consultation d'une reponse..................: F\n");
@@ -75,7 +75,7 @@ void menuGeneral()
 				switch(choixAdminMode)
 				{
 					case 'a':
-					case 'A':
+					case 'A':					
 						liste=ajoutFin(liste,saisirElement());
 					break;
 					
@@ -104,11 +104,10 @@ void menuGeneral()
 						//~ lister(fichier_personnages);
 					//~ break;
 					
-					//~ case 's':
-					//~ case 'S':
-						//~ supprimerCoordonnes(fichier_coordonnes);
-						//~ printf("Fonctionnalité en cours de développement\n");
-					//~ break;
+					case 's':
+					case 'S':
+						supprimerPersonnage(liste);
+					break;
 					
 					//~ case 'r':
 					//~ case 'R':

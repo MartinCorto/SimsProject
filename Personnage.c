@@ -59,8 +59,7 @@ PERSONNAGE*ajoutFin(PERSONNAGE *liste , PERSONNAGE *nouvelElement )
 	//~ /*memset memory set , force la valeur d'un champs de donnees */
 	//~ memset(&new_perso,0,sizeof(new_perso));
 	
-	//~ /* pour ajouter un nouveau personnage on le place a la fin*/
-	//~ fseek(fichier,0,SEEK_END);
+
 	
 	//~ printf("saisir le nom du personnage: ");
 	//~ scanf("%s",new_perso.nom);
@@ -165,16 +164,14 @@ PERSONNAGE*rechercherParNom(PERSONNAGE*liste,char*nom)
 
 /* Fonction permettant d'afficher les coordonées d'un personnage de la base en recherchant son nom ou son prénom */
 void affiche(PERSONNAGE * liste)
-{
-	PERSONNAGE *elem;
+{ 
+	PERSONNAGE*elem=malloc(sizeof(PERSONNAGE));
 	char nom_recherche[TAILLE_NOM];
 
 	printf("saisi du nom du personnage à rechercher dans la BDD: ");
-	scanf("%s",nom_recherche);getchar();		
-	elem = rechercherParNom(liste,*nom_recherche);
+	scanf("%s",elem->nom);	
+	elem = rechercherParNom(liste,elem);
 	afficherpersonnage(elem);
-	
-	
 }
 
 /* Fonction permettant de lister tous les personnage de la base en affichant leurs informations */
@@ -197,7 +194,7 @@ PERSONNAGE *courant = liste;
 
 void supprimerPersonnage(PERSONNAGE* liste)
 {
-	
+	PERSONNAGE*elem=malloc(sizeof(PERSONNAGE));
 	char nom_recherche[TAILLE_NOM];
 	//~ char const *old_FileName = "personnage.bin";
     //~ char *new_FileName = "personnage2.bin";
@@ -209,17 +206,17 @@ void supprimerPersonnage(PERSONNAGE* liste)
 	
 	
 	printf("saisi du nom à supprimer : ");
-	scanf("%s",nom_recherche);
+	scanf("%s",elem->nom);
 	getchar();
-	PERSONNAGE *elem;
-	elem = rechercherParNom(liste,nom_recherche);
+	
+	elem = rechercherParNom(liste,elem);
 	if( liste == NULL ){
 		printf("suppression impossible dans liste vide");
 		return NULL;}
 	if( elem == NULL ){
 		printf("suppression impossible d'element vide");
 		return liste;}
-	
+
 	PERSONNAGE*tmp=NULL;
 	if( elem == liste )
 	{/* on essai de supprimer le premier element */
