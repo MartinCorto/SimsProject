@@ -2,29 +2,29 @@
 #include <stdlib.h>
 #include "BmpLib.h"
 #include "Personnage.h"
-#include "GestionEvenements.h"
 
 
-void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/);
+
+void menuGeneral();
 
 int main(int argc, char **argv)
 {
 	/* Initialisation des fichiers du programme */
-	FILE*fichier_personnages=NULL;
+
 	//~ FILE*fichier_keywords=NULL;
 	//~ FILE*fichier_mail=NULL;
 	//~ FILE*fichier_mailEnvoyes=NULL;
 
 	/* Ouverture des fichiers du programme */
-	fichier_personnages = ouvrir("fichier_peronnages.bin");
+	//~ fichier_personnages = ouvrir("fichier_peronnages.bin");
 	//~ fichier_keywords = ouvrirReponse("reponses.bin");
 	//~ fichier_mail = ouvrir("mailsRecu.bin");
 	//~ fichier_mailEnvoyes = ouvrir("mailsEnvoyes.bin");
 	
-	menuGeneral(fichier_personnages/*, fichier_keywords, fichier_mail, fichier_mailEnvoyes*/);
+	menuGeneral();
 	
 	/* Fermeture des fichiers du programme */
-	fermer(fichier_personnages);
+	//~ fermer(fichier_personnages);
 	//~ fermer(fichier_keywords);
 	//~ fermer(fichier_mail);
 	//~ fermer(fichier_mailEnvoyes);
@@ -34,8 +34,9 @@ int main(int argc, char **argv)
 
 
 /* Fonction gérer les évènements des touches appuyées */
-void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/)
+void menuGeneral()
 {
+	PERSONNAGE *liste=NULL;
 	//~ double start = clock(); début cpt temps
 	//~ double stop = clock(); fin cpt temps   stop-start = tps écoulé
 	
@@ -75,17 +76,17 @@ void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fich
 				{
 					case 'a':
 					case 'A':
-						ajout(fichier_personnages);
+						ajoutFin(liste);
 					break;
 					
 					case 'c':
 					case 'C':
-						affiche(fichier_personnages);
+						affiche(liste);
 					break;
 					
 					case 'l':
 					case 'L':
-						lister(fichier_personnages);
+						lister(liste);
 					break;
 					
 					//~ case 'b':

@@ -20,20 +20,21 @@ typedef struct caracteristiques
 typedef struct personnage
 {
 	char nom[TAILLE_NOM];
-	char prenom[TAILLE_NOM];
 	CARACT caracteristiques;
-	char position[TAILLE_POSITION]; 
+	char position[TAILLE_POSITION][TAILLE_POSITION]; 
 	unsigned int sexe;
+	struct personnage *suiv;
 } PERSONNAGE;
 
 
-
-void supprimerPersonnage(FILE* fichier);
-void lister(FILE *fichier);
-void affiche(FILE *fichier);
+PERSONNAGE*rechercherParNom(PERSONNAGE*personnage,char*nom);
+void supprimerPersonnage(PERSONNAGE *personnage);
+void lister(PERSONNAGE *personnage);
+void affiche(PERSONNAGE *personnage);
 void afficherpersonnage(PERSONNAGE*personnage);
 void fermer(FILE*fichier_ouvert);
-void ajout(FILE *fichier);
+//~ void ajout(FILE *fichier);
+PERSONNAGE * ajoutFin(PERSONNAGE *liste );
 FILE*ouvrir(char*nom_fichier);
 int randPers(void);
 void attribuerCaracteristiquesAlea(PERSONNAGE*personnage);

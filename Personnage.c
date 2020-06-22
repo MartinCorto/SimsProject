@@ -4,42 +4,100 @@
 #include <unistd.h>
 #include <time.h>
 
-void ajout(FILE *fichier)
+//~ void ajout(FILE *fichier)
+//~ {
+PERSONNAGE * ajoutFin(PERSONNAGE *liste)
 {
-	PERSONNAGE new_perso;
-	//~ char choix;
+printf("3");
+	PERSONNAGE *new_perso;
+
+	memset(&new_perso,0,sizeof(PERSONNAGE *));
+
 	char choix_sexe;
-	
-	printf("Ajout d'un nouveau personnage à la base de données\n");
-	/*memset memory set , force la valeur d'un champs de donnees */
-	memset(&new_perso,0,sizeof(new_perso));
-	
-	/* pour ajouter un nouveau personnage on le place a la fin*/
-	fseek(fichier,0,SEEK_END);
-	
+	char tmp[TAILLE_NOM] ;
+
 	printf("saisir le nom du personnage: ");
-	scanf("%s",new_perso.nom);
-	printf("saisir le prenom du personnage: ");
-	scanf("%s",new_perso.prenom);
-	
+	scanf("%s",tmp);
 	getchar();
+
+	printf("%s",tmp);
 	
-	printf("saisir le sexe du personnage ( H/F ) : ");
-	scanf("%c",&choix_sexe);getchar();
-	if( (choix_sexe == 'f') || (choix_sexe == 'F'))
-	{		
-		new_perso.sexe = 2;
-		printf("le personnage est une femme\n");
-	}else if( (choix_sexe = 'h') || (choix_sexe == 'H'))
-	{
-		new_perso.sexe = 1;
-		printf("le personnage est un homme\n");
-	}
-	attribuerCaracteristiquesAlea(&new_perso);
-	afficherpersonnage(&new_perso);
-	fwrite(&new_perso,sizeof(PERSONNAGE),1,fichier);
-	printf("personnage cree\n");	
+	
+	strcpy(new_perso->nom,tmp);
+	
+	//~ printf("%s",new_perso->nom);
+	
+	
+	//~ printf("saisir le sexe du personnage ( H/F ) : ");
+	//~ scanf("%c",&choix_sexe);
+	//~ getchar();
+	//~ if( (choix_sexe == 'f') || (choix_sexe == 'F'))
+	//~ {		
+		//~ new_perso->sexe = 2;
+		//~ printf("le personnage est une femme\n");
+	//~ }else if( (choix_sexe = 'h') || (choix_sexe == 'H'))
+	//~ {
+		//~ new_perso->sexe = 1;
+		//~ printf("le personnage est un homme\n");
+	//~ }
+	//~ attribuerCaracteristiquesAlea(&new_perso);
+	//~ afficherpersonnage(&new_perso);
+	//~ if (liste == NULL)
+	//~ {	/* cas d'une liste vide */
+		//~ new_perso->suiv = NULL;
+		//~ liste = new_perso;
+	//~ }
+	//~ else
+	//~ {	/* cas normal */
+		
+		//~ PERSONNAGE *courant=liste;
+//~ /* contrairement a l'affichage on ne doit pas aller jusqu'a courant == NULL */
+//~ /* mais juste un cran avant car on veut avoir acces au contenu de courant  */
+		//~ while( courant->suiv != NULL ) 
+		//~ {
+			//~ /* on avance vers l'element suivant */
+			//~ courant = courant->suiv;
+		//~ }
+		//~ /* ici on est au bon endroit au dernier element */
+		//~ courant->suiv=new_perso;
+		//~ new_perso->suiv=NULL;
+		
+	//~ }
+	return liste;
 }
+
+	//~ PERSONNAGE new_perso;
+	//~ char choix;
+	//~ char choix_sexe;
+	
+	//~ printf("Ajout d'un nouveau personnage à la base de données\n");
+	//~ /*memset memory set , force la valeur d'un champs de donnees */
+	//~ memset(&new_perso,0,sizeof(new_perso));
+	
+	//~ /* pour ajouter un nouveau personnage on le place a la fin*/
+	//~ fseek(fichier,0,SEEK_END);
+	
+	//~ printf("saisir le nom du personnage: ");
+	//~ scanf("%s",new_perso.nom);
+	
+	//~ getchar();
+	
+	//~ printf("saisir le sexe du personnage ( H/F ) : ");
+	//~ scanf("%c",&choix_sexe);getchar();
+	//~ if( (choix_sexe == 'f') || (choix_sexe == 'F'))
+	//~ {		
+		//~ new_perso.sexe = 2;
+		//~ printf("le personnage est une femme\n");
+	//~ }else if( (choix_sexe = 'h') || (choix_sexe == 'H'))
+	//~ {
+		//~ new_perso.sexe = 1;
+		//~ printf("le personnage est un homme\n");
+	//~ }
+	//~ attribuerCaracteristiquesAlea(&new_perso);
+	//~ afficherpersonnage(&new_perso);
+	//~ fwrite(&new_perso,sizeof(PERSONNAGE),1,fichier);
+	//~ printf("personnage cree\n");	
+//~ }
 
 /* Fonction permettant d'ouvrir un fichier pour le modifier */
 FILE*ouvrir(char*nom_fichier)
@@ -92,7 +150,6 @@ void afficherpersonnage(PERSONNAGE*personnage)
 {
 	if(personnage==NULL)return;
 	printf("Nom du personnage: %s\n",personnage->nom);
-	printf("Prenom du personnage: %s\n",personnage->prenom);
 	printf("santé du personnage: %d\n",personnage->caracteristiques.sante);
 	printf("argent du personnage: %d\n",personnage->caracteristiques.argent);
 	printf("sommeil du personnage: %d\n",personnage->caracteristiques.sommeil);
@@ -101,137 +158,162 @@ void afficherpersonnage(PERSONNAGE*personnage)
 	printf("hygiene du personnage: %d\n",personnage->caracteristiques.hygiene);
 }
 
-/* Fonction permettant d'afficher les coordonées d'un personnage de la base en recherchant son nom ou son prénom */
-void affiche(FILE *fichier)
+PERSONNAGE*rechercherParNom(PERSONNAGE*personnage,char*nom)
 {
-	PERSONNAGE personnage;
-	char nom_recherche[TAILLE_NOM];
-	char prenom_recherche[TAILLE_NOM];
-	char choix;
-	printf("Affiche les informations d'un personnage en fonction d'un critère de recherche\n");
-	
-	printf("Choix du critere de recherche d'un personnage :\n");
-	printf("1 : nom | 2 prenom \n");
-	scanf("%c",&choix);getchar();
-	switch(choix)
+	if( personnage == NULL )
 	{
-		case '1':
-			printf("saisi du nom du personnage à rechercher dans la BDD: ");
-			scanf("%s",nom_recherche);getchar();
-			break;
-			
-		case '2':
-			printf("saisi du prenom du personnage à rechercher dans la BDD : ");
-			scanf("%s",prenom_recherche);getchar();
-			break;
-			
-		default :
-			printf("Critere de recherche inconnu : abandon \n");
-			return;
+		printf("rechercherParNom impossible sur liste vide\n");
+		return NULL;
 	}
 	
-/*positionnement du curseur au debut du ficher */
-	fseek(fichier ,0,SEEK_SET);
-/* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
-	while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
-	{	
-/* pour chaque mode de recherche on va appliquer la bonne comparaison*/
-		if(choix == '1')
-		{
-			if(strcmp(nom_recherche,personnage.nom)==0)
-			{
-				afficherpersonnage(&personnage);
-				return;
-			}
-		}
-		else if ( choix == '2')
-		{
-			if(strcmp(prenom_recherche,personnage.prenom)==0)
-			{
-				afficherpersonnage(&personnage);
-				return;
-			}
-		}
+	PERSONNAGE*courant = personnage;
+	while( courant != NULL )
+	{
+		if( strcmp(courant->nom,nom) == 0 )
+			return courant;
+		courant = courant -> suiv ;
 	}
-/* si on est arrive ici on n'a donc pas trouver le personnage */	
-	printf("Personnage introuvable dans la base de données\n");
+	/* si o narrive ici c'est qu'on a pas trouver  */
+	printf("Nom [%s] introuvable dans la liste\n",nom);
+	return NULL;
+}
+
+/* Fonction permettant d'afficher les coordonées d'un personnage de la base en recherchant son nom ou son prénom */
+void affiche(PERSONNAGE *personnage)
+{
+	PERSONNAGE *elem;
+	char nom_recherche[TAILLE_NOM];
+
+	printf("saisi du nom du personnage à rechercher dans la BDD: ");
+	scanf("%s",nom_recherche);getchar();		
+	elem = rechercherParNom(personnage,*nom_recherche);
+	afficherpersonnage(elem);
+	
+//~ /*positionnement du curseur au debut du ficher */
+	//~ fseek(fichier ,0,SEEK_SET);
+//~ /* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
+	//~ while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
+	//~ {	
+//~ /* pour chaque mode de recherche on va appliquer la bonne comparaison*/
+		
+			//~ if(strcmp(nom_recherche,personnage.nom)==0)
+			//~ {
+				//~ afficherpersonnage(&personnage);
+			//~ }
+//~ /* si on est arrive ici on n'a donc pas trouver le personnage */	
+	//~ printf("Personnage introuvable dans la base de données\n");
 	
 }
 
 /* Fonction permettant de lister tous les personnage de la base en affichant leurs informations */
-void lister(FILE *fichier)
+void lister(PERSONNAGE *personnage)
 {
-	PERSONNAGE personnage;
-	int nombre_personnage=0;
-	printf("lister les caractéristiques des personnages de la base de données\n");
-	/*positionnement du curseur au debut du ficher */
-	fseek(fichier ,0,SEEK_SET);
-/* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
-	while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
-	{	
-		afficherpersonnage(&personnage);
-		nombre_personnage++;
+	//~ PERSONNAGE personnage;
+	//~ int nombre_personnage=0;
+	//~ printf("lister les caractéristiques des personnages de la base de données\n");
+	//~ /*positionnement du curseur au debut du ficher */
+	//~ fseek(fichier ,0,SEEK_SET);
+//~ /* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
+	//~ while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
+	//~ {	
+		//~ afficherpersonnage(&personnage);
+		//~ nombre_personnage++;
+	//~ }
+	//~ printf("il y a %d personnages\n",nombre_personnage);
+PERSONNAGE *courant=personnage;
+	if( personnage == NULL )
+	{
+		printf("afficheListe impossible sur liste vide\n");
+		return ;
 	}
-	printf("il y a %d personnages\n",nombre_personnage);
+	while( courant != NULL ) /* tant qu'il reste des elements */
+	{
+		afficherpersonnage(courant);
+		
+		/* on avance vers l'element suivant */
+		courant = courant->suiv;
+	}
 }
 
-void supprimerPersonnage(FILE* fichier){
-	PERSONNAGE personnage;
+void supprimerPersonnage(PERSONNAGE* personnage)
+{
+	
 	char nom_recherche[TAILLE_NOM];
-	char prenom_recherche[TAILLE_NOM];
-	char choix;
-	char const *old_FileName = "personnage.bin";
-    char *new_FileName = "personnage2.bin";
-	FILE *new_FilePersonnage=NULL;
-	new_FilePersonnage = ouvrir(new_FileName);
+	//~ char const *old_FileName = "personnage.bin";
+    //~ char *new_FileName = "personnage2.bin";
+	//~ FILE *new_FilePersonnage=NULL;
+	//~ new_FilePersonnage = ouvrir(new_FileName);
 
 	printf("Supprimer un personnage de la base de données\n");
 	
-	printf("choix du critere de recherche pour supprimer un personnage :\n");
-	printf("1 : nom | 2 prenom \n");
-	scanf("%c",&choix);getchar();
-	switch(choix)
-	{
-		case '1':
-			printf("saisi du nom à supprimer : ");
-			scanf("%s",nom_recherche);
-			getchar();
-			break;
-			
-		case '2':
-			printf("saisi du prenom a supprimer : ");
-			scanf("%s",prenom_recherche);
-			getchar();
-			break;
-			
-		default :
-			printf("critere inconnu : abandon \n");
-			return;
+	
+	
+	printf("saisi du nom à supprimer : ");
+	scanf("%s",nom_recherche);
+	getchar();
+	PERSONNAGE *elem;
+	elem = rechercherParNom(personnage,nom_recherche);
+	if( personnage == NULL ){
+		printf("suppression impossible dans liste vide");
+		return NULL;}
+	if( elem == NULL ){
+		printf("suppression impossible d'element vide");
+		return personnage;}
+	
+	PERSONNAGE*tmp=NULL;
+	if( elem == personnage )
+	{/* on essai de supprimer le premier element */
+		tmp=personnage;
+		personnage=elem->suiv;
+		free(tmp);
+		tmp=NULL;
+		return personnage;
 	}
 	
-/*positionnement du curseur au debut du ficher */
-	fseek(fichier ,0,SEEK_SET);
-/* on va lire des personnage du fichier un par un jusqu'à la fin du fichier*/
-	while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
-	{	
-/* pour chaque mode de recherche on va appliquer la bonne comparaison*/
-		if(choix == '1')
+	
+
+	/* on va parcourire la liste en regardanr les adresse */
+	PERSONNAGE*courant=personnage;
+	PERSONNAGE*precedent=NULL;
+	while(courant!=NULL)
+	{	/* on a trouver la bonne adresse */
+		if(courant == elem)
 		{
-			if((strcmp(nom_recherche,personnage.nom)==0) || (strcmp(prenom_recherche,personnage.prenom)==0))
-			{
-				printf("personnage trouvees donc on ne fait rien\n");
-			}
+			precedent->suiv=courant->suiv;
+			free(courant);
+			courant=NULL;
+			return personnage;
 		}
-		else
-		{
-			fwrite(&personnage,sizeof(PERSONNAGE),1,new_FilePersonnage);
-		}	
+		
+		precedent=courant;
+		courant=courant->suiv;
 	}
-	fermer(fichier);
-	fermer(new_FilePersonnage);
-	remove(old_FileName);
-    rename(new_FileName, old_FileName);
-    ouvrir("personnage.bin");
-/* si on est arrive ici on n'a donc pas trouver le personnage */	
-	printf("Personnage introuvable \n");
+	
+	return ;
+	
+	
+//~ /*positionnement du curseur au debut du ficher */
+	//~ fseek(fichier ,0,SEEK_SET);
+//~ /* on va lire des personnage du fichier un par un jusqu'à la fin du fichier*/
+	//~ while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
+	//~ {	
+//~ /* pour chaque mode de recherche on va appliquer la bonne comparaison*/
+		
+			//~ if((strcmp(nom_recherche,personnage.nom)==0))
+			//~ {
+				//~ printf("personnage trouvees donc on ne fait rien\n");
+			//~ }
+		
+		//~ else
+		//~ {
+			//~ fwrite(&personnage,sizeof(PERSONNAGE),1,new_FilePersonnage);
+		//~ }	
+	//~ }
+	//~ fermer(fichier);
+	//~ fermer(new_FilePersonnage);
+	//~ remove(old_FileName);
+    //~ rename(new_FileName, old_FileName);
+    //~ ouvrir("personnage.bin");
+//~ /* si on est arrive ici on n'a donc pas trouver le personnage */	
+	//~ printf("Personnage introuvable \n");
 }

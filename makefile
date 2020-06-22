@@ -1,11 +1,8 @@
-Personnage: Personnage.o GestionEvenements.o main.o BmpLib.o OutilsLib.o
-	gcc -o Personnage main.o BmpLib.o OutilsLib.o Personnage.o GestionEvenements.o
+Personnage: Personnage.o  main.o BmpLib.o OutilsLib.o
+	gcc -o Personnage main.o BmpLib.o OutilsLib.o Personnage.o 
 
-main.o: main.c GestionEvenements.h Personnage.h
+main.o: main.c Personnage.h
 	gcc -c -Wall main.c
-
-GestionEvenements.o: GestionEvenements.c GestionEvenements.h
-	gcc -c -Wall GestionEvenements.c
 
 Personnage.o: Personnage.c Personnage.h
 	gcc -c -Wall Personnage.c
@@ -17,4 +14,4 @@ OutilsLib.o: OutilsLib.c OutilsLib.h
 	gcc -c -Wall OutilsLib.c
 
 clean:
-	rm -rf main.o BmpLib.o GestionEvenements.o OutilsLib.o Personnage.o Personnage
+	rm -rf main.o BmpLib.o OutilsLib.o Personnage.o Personnage
