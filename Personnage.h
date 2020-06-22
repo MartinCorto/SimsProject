@@ -27,14 +27,15 @@ typedef struct personnage
 } PERSONNAGE;
 
 
-PERSONNAGE*rechercherParNom(PERSONNAGE*personnage,char*nom);
-void supprimerPersonnage(PERSONNAGE *personnage);
-void lister(PERSONNAGE *personnage);
-void affiche(PERSONNAGE *personnage);
-void afficherpersonnage(PERSONNAGE*personnage);
+PERSONNAGE*rechercherParNom(PERSONNAGE*liste,char*nom);
+PERSONNAGE*saisirElement(void);
+void supprimerPersonnage(PERSONNAGE *liste);
+void lister(PERSONNAGE *liste);
+void affiche(PERSONNAGE *liste);
+void afficherpersonnage(PERSONNAGE*liste);
 void fermer(FILE*fichier_ouvert);
 //~ void ajout(FILE *fichier);
-PERSONNAGE * ajoutFin(PERSONNAGE *liste );
+PERSONNAGE*ajoutFin(PERSONNAGE *liste , PERSONNAGE *nouvelElement );
 FILE*ouvrir(char*nom_fichier);
 int randPers(void);
-void attribuerCaracteristiquesAlea(PERSONNAGE*personnage);
+void attribuerCaracteristiquesAlea(PERSONNAGE*liste);

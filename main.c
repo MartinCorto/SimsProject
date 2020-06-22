@@ -39,7 +39,7 @@ void menuGeneral()
 	PERSONNAGE *liste=NULL;
 	//~ double start = clock(); début cpt temps
 	//~ double stop = clock(); fin cpt temps   stop-start = tps écoulé
-	
+
 	char choixGeneral;
 	do
 	{
@@ -76,7 +76,7 @@ void menuGeneral()
 				{
 					case 'a':
 					case 'A':
-						ajoutFin(liste);
+						liste=ajoutFin(liste,saisirElement());
 					break;
 					
 					case 'c':

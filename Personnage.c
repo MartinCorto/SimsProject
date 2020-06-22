@@ -4,71 +4,56 @@
 #include <unistd.h>
 #include <time.h>
 
-//~ void ajout(FILE *fichier)
-//~ {
-PERSONNAGE * ajoutFin(PERSONNAGE *liste)
+
+PERSONNAGE*saisirElement(void)
 {
-printf("3");
-	PERSONNAGE *new_perso;
+	PERSONNAGE*new=malloc(sizeof(PERSONNAGE));
+	if( new == NULL )
+	{
+		printf("Erreur allocation memoire dans saisirElement()\n");
+		return NULL;
+	}
+	printf("Saisir element\n");
+	printf("nom : ");
+	scanf("%s",new->nom);
+	printf("sexe (H=1,F=2)  : ");
+	scanf("%d",&new->sexe);
+	printf("affichage de l'element saisi\n");
+	attribuerCaracteristiquesAlea(new);
+	afficherpersonnage(new);
+	return new;
+}
 
-	memset(&new_perso,0,sizeof(PERSONNAGE *));
-
-	char choix_sexe;
-	char tmp[TAILLE_NOM] ;
-
-	printf("saisir le nom du personnage: ");
-	scanf("%s",tmp);
-	getchar();
-
-	printf("%s",tmp);
+PERSONNAGE*ajoutFin(PERSONNAGE *liste , PERSONNAGE *nouvelElement )
+{
 	
 	
-	strcpy(new_perso->nom,tmp);
-	
-	//~ printf("%s",new_perso->nom);
-	
-	
-	//~ printf("saisir le sexe du personnage ( H/F ) : ");
-	//~ scanf("%c",&choix_sexe);
-	//~ getchar();
-	//~ if( (choix_sexe == 'f') || (choix_sexe == 'F'))
-	//~ {		
-		//~ new_perso->sexe = 2;
-		//~ printf("le personnage est une femme\n");
-	//~ }else if( (choix_sexe = 'h') || (choix_sexe == 'H'))
-	//~ {
-		//~ new_perso->sexe = 1;
-		//~ printf("le personnage est un homme\n");
-	//~ }
-	//~ attribuerCaracteristiquesAlea(&new_perso);
-	//~ afficherpersonnage(&new_perso);
-	//~ if (liste == NULL)
-	//~ {	/* cas d'une liste vide */
-		//~ new_perso->suiv = NULL;
-		//~ liste = new_perso;
-	//~ }
-	//~ else
-	//~ {	/* cas normal */
+	if (liste == NULL)
+	{	/* cas d'une liste vide */
 		
-		//~ PERSONNAGE *courant=liste;
-//~ /* contrairement a l'affichage on ne doit pas aller jusqu'a courant == NULL */
-//~ /* mais juste un cran avant car on veut avoir acces au contenu de courant  */
-		//~ while( courant->suiv != NULL ) 
-		//~ {
-			//~ /* on avance vers l'element suivant */
-			//~ courant = courant->suiv;
-		//~ }
-		//~ /* ici on est au bon endroit au dernier element */
-		//~ courant->suiv=new_perso;
-		//~ new_perso->suiv=NULL;
+		nouvelElement->suiv = NULL;
+		liste = nouvelElement;
+	}
+	else
+	{	/* cas normal */
+		PERSONNAGE *courant=liste;
+/* contrairement a l'affichage on ne doit pas aller jusqu'a courant == NULL */
+/* mais juste un cran avant car on veut avoir acces au contenu de courant  */
+		while( courant->suiv != NULL ) 
+		{
+			/* on avance vers l'element suivant */
+			courant = courant->suiv;
+		}
+		/* ici on est au bon endroit au dernier element */
+		courant->suiv=nouvelElement;
+		nouvelElement->suiv=NULL;
 		
-	//~ }
+	}
 	return liste;
 }
 
-	//~ PERSONNAGE new_perso;
-	//~ char choix;
-	//~ char choix_sexe;
+		
+	
 	
 	//~ printf("Ajout d'un nouveau personnage à la base de données\n");
 	//~ /*memset memory set , force la valeur d'un champs de donnees */
@@ -146,27 +131,27 @@ int randPers(void)
 }
 
 /* Fonction permettant d'afficher les coordonées d'un personnage */
-void afficherpersonnage(PERSONNAGE*personnage)
+void afficherpersonnage(PERSONNAGE*pers)
 {
-	if(personnage==NULL)return;
-	printf("Nom du personnage: %s\n",personnage->nom);
-	printf("santé du personnage: %d\n",personnage->caracteristiques.sante);
-	printf("argent du personnage: %d\n",personnage->caracteristiques.argent);
-	printf("sommeil du personnage: %d\n",personnage->caracteristiques.sommeil);
-	printf("moral du personnage: %d\n",personnage->caracteristiques.moral);
-	printf("faim du personnage: %d\n",personnage->caracteristiques.faim);
-	printf("hygiene du personnage: %d\n",personnage->caracteristiques.hygiene);
+	if(pers==NULL)return;
+	printf("Nom du personnage: %s\n",pers->nom);
+	printf("santé du personnage: %d\n",pers->caracteristiques.sante);
+	printf("argent du personnage: %d\n",pers->caracteristiques.argent);
+	printf("sommeil du personnage: %d\n",pers->caracteristiques.sommeil);
+	printf("moral du personnage: %d\n",pers->caracteristiques.moral);
+	printf("faim du personnage: %d\n",pers->caracteristiques.faim);
+	printf("hygiene du personnage: %d\n",pers->caracteristiques.hygiene);
 }
 
-PERSONNAGE*rechercherParNom(PERSONNAGE*personnage,char*nom)
+PERSONNAGE*rechercherParNom(PERSONNAGE*liste,char*nom)
 {
-	if( personnage == NULL )
+	if( liste == NULL )
 	{
 		printf("rechercherParNom impossible sur liste vide\n");
 		return NULL;
 	}
 	
-	PERSONNAGE*courant = personnage;
+	PERSONNAGE*courant = liste;
 	while( courant != NULL )
 	{
 		if( strcmp(courant->nom,nom) == 0 )
@@ -179,49 +164,24 @@ PERSONNAGE*rechercherParNom(PERSONNAGE*personnage,char*nom)
 }
 
 /* Fonction permettant d'afficher les coordonées d'un personnage de la base en recherchant son nom ou son prénom */
-void affiche(PERSONNAGE *personnage)
+void affiche(PERSONNAGE * liste)
 {
 	PERSONNAGE *elem;
 	char nom_recherche[TAILLE_NOM];
 
 	printf("saisi du nom du personnage à rechercher dans la BDD: ");
 	scanf("%s",nom_recherche);getchar();		
-	elem = rechercherParNom(personnage,*nom_recherche);
+	elem = rechercherParNom(liste,*nom_recherche);
 	afficherpersonnage(elem);
 	
-//~ /*positionnement du curseur au debut du ficher */
-	//~ fseek(fichier ,0,SEEK_SET);
-//~ /* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
-	//~ while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
-	//~ {	
-//~ /* pour chaque mode de recherche on va appliquer la bonne comparaison*/
-		
-			//~ if(strcmp(nom_recherche,personnage.nom)==0)
-			//~ {
-				//~ afficherpersonnage(&personnage);
-			//~ }
-//~ /* si on est arrive ici on n'a donc pas trouver le personnage */	
-	//~ printf("Personnage introuvable dans la base de données\n");
 	
 }
 
 /* Fonction permettant de lister tous les personnage de la base en affichant leurs informations */
-void lister(PERSONNAGE *personnage)
+void lister(PERSONNAGE *liste)
 {
-	//~ PERSONNAGE personnage;
-	//~ int nombre_personnage=0;
-	//~ printf("lister les caractéristiques des personnages de la base de données\n");
-	//~ /*positionnement du curseur au debut du ficher */
-	//~ fseek(fichier ,0,SEEK_SET);
-//~ /* on va lire des personnage du fichier un par un jusqua la fin du fichier*/
-	//~ while(fread(&personnage,sizeof(PERSONNAGE),1,fichier)!=0)
-	//~ {	
-		//~ afficherpersonnage(&personnage);
-		//~ nombre_personnage++;
-	//~ }
-	//~ printf("il y a %d personnages\n",nombre_personnage);
-PERSONNAGE *courant=personnage;
-	if( personnage == NULL )
+PERSONNAGE *courant = liste;
+	if( liste == NULL )
 	{
 		printf("afficheListe impossible sur liste vide\n");
 		return ;
@@ -235,7 +195,7 @@ PERSONNAGE *courant=personnage;
 	}
 }
 
-void supprimerPersonnage(PERSONNAGE* personnage)
+void supprimerPersonnage(PERSONNAGE* liste)
 {
 	
 	char nom_recherche[TAILLE_NOM];
@@ -252,28 +212,28 @@ void supprimerPersonnage(PERSONNAGE* personnage)
 	scanf("%s",nom_recherche);
 	getchar();
 	PERSONNAGE *elem;
-	elem = rechercherParNom(personnage,nom_recherche);
-	if( personnage == NULL ){
+	elem = rechercherParNom(liste,nom_recherche);
+	if( liste == NULL ){
 		printf("suppression impossible dans liste vide");
 		return NULL;}
 	if( elem == NULL ){
 		printf("suppression impossible d'element vide");
-		return personnage;}
+		return liste;}
 	
 	PERSONNAGE*tmp=NULL;
-	if( elem == personnage )
+	if( elem == liste )
 	{/* on essai de supprimer le premier element */
-		tmp=personnage;
-		personnage=elem->suiv;
+		tmp=liste;
+		liste=elem->suiv;
 		free(tmp);
 		tmp=NULL;
-		return personnage;
+		return liste;
 	}
 	
 	
 
 	/* on va parcourire la liste en regardanr les adresse */
-	PERSONNAGE*courant=personnage;
+	PERSONNAGE*courant=liste;
 	PERSONNAGE*precedent=NULL;
 	while(courant!=NULL)
 	{	/* on a trouver la bonne adresse */
@@ -282,7 +242,7 @@ void supprimerPersonnage(PERSONNAGE* personnage)
 			precedent->suiv=courant->suiv;
 			free(courant);
 			courant=NULL;
-			return personnage;
+			return liste;
 		}
 		
 		precedent=courant;
