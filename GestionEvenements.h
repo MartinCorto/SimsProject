@@ -14,7 +14,6 @@ typedef struct evt
 	int moral;
 	int faim;
 	int hygiene;
-	struct EVT * event_suiv;
 } EVT;
 
 
@@ -22,13 +21,19 @@ typedef struct evt
 typedef struct
 {
 	char nom_lieu[TAILLE_NOM_LIEU];
-	//~ struct EVT * event_suiv;
 	EVT * event;
-	int nb_evt;//allocation dynamique du nombre d'event
+	int nb_evt;
 } LIEU;
 
-void initialisationEvenements(void);
-void afficheLIEU(LIEU lieu);
+LIEU * initialisationCuisine(LIEU * cuisine);
+LIEU * initialisationChambre(LIEU * chambre);
+LIEU * initialisationSalleDeBain(LIEU * salleDeBain);
+LIEU * initialisationCellier(LIEU * cellier);
+LIEU * initialisationExterieur(LIEU * exterieur);
+LIEU * initialisationJardin(LIEU * jardin);
+LIEU * initialisationSalon(LIEU * salon);
+
+void afficheLIEU(LIEU * lieu);
 
 EVT*insertionNewEvt(EVT *listeEvt, EVT *nouvelEvt);
 
@@ -36,11 +41,4 @@ EVT*insertionNewEvt(EVT *listeEvt, EVT *nouvelEvt);
 void afficheListeEvent(EVT *liste);
 void afficheEvent(EVT *event);
 
-EVT attribuerCaracteristiquesEvt(EVT evt, char * p_nomAction, int p_duree_evt, int p_faim, int p_hygiene, int p_moral, int p_prix, int p_sante, int p_sommeil);
-//~ void afficheElementEvent(EVT *event);
-
-//~ void ajouterEvenement(FILE *fichier_evenement);
-//~ EVT*insertionAlphaEvent(EVT *liste, EVT *nouvelElement);
-
-//~ FILE*ouvrirEvenements(char*nom_fichier);
-//~ void fermerEvenements(FILE*fichier_ouvert);
+void attribuerCaracteristiquesEvt(LIEU * lieu, char * p_nomAction, int p_duree_evt, int p_faim, int p_hygiene, int p_moral, int p_prix, int p_sante, int p_sommeil);

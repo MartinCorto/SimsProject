@@ -7,183 +7,48 @@
 #include "GestionEvenements.h"
 
 
-void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/);
 
 int main(int argc, char **argv)
 {
-	printf("hello\n\n");
-	//~ /* Initialisation des fichiers du programme */
-	//~ FILE*fichier_personnages=NULL;
-
-	//~ /* Ouverture des fichiers du programme */
-	//~ fichier_personnages = ouvrir("fichier_peronnages.bin");
-
+	double start = clock();
 	
-	//~ menuGeneral(fichier_personnages);
+	LIEU * cuisine = malloc(sizeof(LIEU));
+	cuisine = initialisationCuisine(cuisine);
+	afficheLIEU(cuisine);
 	
-	//~ /* Fermeture des fichiers du programme */
-	//~ fermer(fichier_personnages);
+	LIEU * chambre = malloc(sizeof(LIEU));
+	chambre = initialisationChambre(chambre);
+	afficheLIEU(chambre);
 	
-	initialisationEvenements();
+	LIEU * cellier = malloc(sizeof(LIEU));
+	chambre = initialisationCellier(cellier);
+	afficheLIEU(cellier);
 	
-	char choixGeneral;
-	do
-	{
-		
-		
-		
-		printf("\tChoix du mode d'utilisation :\n");
-		printf("\t1 : temps \n");
-		printf("\tQuitter................................: Q\n");
-		printf(" Votre choix: ");
-		scanf("%c",&choixGeneral);
-		getchar();
-		
-		switch(choixGeneral)
-		{
-			
-			
-			case '1':
-				//~ unsigned long begin = time( NULL );
-    
-				//~ // Do something
-				//~ sleep( 2 );   // Is a POSIX function - defined in <unistd.h>
-				
-				//~ unsigned long end = time( NULL);
-				//~ unsigned long secondes = (unsigned long) difftime( end, begin );
-				//~ printf( "Finished in %ld sec\n", secondes ); 
-				break;
-				
-			case 'q':
-			case 'Q':
-				printf("Porgramme fermé\n");
-				break;
-				
-			default :
-				printf("Commande inconnu [%c]\n",choixGeneral);
-				break;
-		}
-		printf("\n\n");
-	}while (choixGeneral != 'q' && choixGeneral != 'Q');
+	LIEU * salleDeBain = malloc(sizeof(LIEU));
+	chambre = initialisationSalleDeBain(salleDeBain);
+	afficheLIEU(salleDeBain);
 	
+	LIEU * jardin = malloc(sizeof(LIEU));
+	jardin = initialisationJardin(jardin);
+	afficheLIEU(jardin);
+	
+	LIEU * exterieur = malloc(sizeof(LIEU));
+	exterieur = initialisationExterieur(exterieur);
+	afficheLIEU(exterieur);
+	
+	LIEU * salon = malloc(sizeof(LIEU));
+	salon = initialisationSalon(salon);
+	afficheLIEU(salon);
+	
+	
+	//~ double start = clock(); début cpt temps
+	double stop = clock(); 
+	//~ fin cpt temps   
+	printf("Tps %lf en ms\n",(stop-start)* 1000/CLOCKS_PER_SEC);
+	//~ stop-start = tps écoulé
 
 	
 	return 0;
 }
 
-
-/* Fonction gérer les évènements des touches appuyées */
-void menuGeneral(FILE* fichier_personnages/*, FILE* fichier_keywords, FILE* fichier_mail, FILE* fichier_mailEnvoyes*/)
-{
-	//~ double start = clock(); début cpt temps
-	//~ double stop = clock(); fin cpt temps   stop-start = tps écoulé
-	
-	char choixGeneral;
-	do
-	{
-		printf("\tChoix du mode d'utilisation :\n");
-		printf("\t1 : administrateur | 2 utilisateur \n");
-		printf("\tQuitter................................: Q\n");
-		printf(" Votre choix: ");
-		scanf("%c",&choixGeneral);
-		getchar();
-		
-		switch(choixGeneral)
-		{
-			case '1': 
-				printf("\t\tMODE ADMINISTRATEUR\n");
-				char choixAdminMode;
-				printf("Ajouter une nouvelle coordonnees............: A\n");
-				printf("Consultation d'une coordonnees..............: C\n");
-				printf("Lister toutes les coordonnees...............: L\n");
-				
-				printf("Creer un new event............: B\n");
-				printf("Consultation d'un event..............: Z\n");
-				printf("Lister tout les events...............: K\n");
-				//~ printf("Supprimer les coordonnees d'un client.......: S\n");
-				
-				//~ printf("Ajouter une nouvelle reponse................: R\n");
-				//~ printf("Consultation d'une reponse..................: F\n");
-				//~ printf("Lister toutes les reponses..................: D\n");
-				//~ printf("Quitter et revenir au menu antérieur........: Q\n");
-				printf(" votre choix: ");
-
-				scanf("%c",&choixAdminMode);
-				getchar();
-				switch(choixAdminMode)
-				{
-					case 'a':
-					case 'A':
-						ajout(fichier_personnages);
-					break;
-					
-					case 'c':
-					case 'C':
-						affiche(fichier_personnages);
-					break;
-					
-					case 'l':
-					case 'L':
-						lister(fichier_personnages);
-					break;
-					
-					//~ case 'b':
-					//~ case 'B':
-						//~ ajout(fichier_personnages);
-					//~ break;
-					
-					//~ case 'z':
-					//~ case 'Z':
-						//~ affiche(fichier_personnages);
-					//~ break;
-					
-					//~ case 'k':
-					//~ case 'k':
-						//~ lister(fichier_personnages);
-					//~ break;
-					
-					//~ case 's':
-					//~ case 'S':
-						//~ supprimerCoordonnes(fichier_coordonnes);
-						//~ printf("Fonctionnalité en cours de développement\n");
-					//~ break;
-					
-					//~ case 'r':
-					//~ case 'R':
-						//~ ajoutReponse(fichier_keywords);
-					//~ break;
-					
-					//~ case 'f':
-					//~ case 'F':
-						//~ afficheReponse(fichier_keywords);
-					//~ break;
-					
-					//~ case 'd':
-					//~ case 'D':
-						//~ listerReponse(fichier_keywords);
-					//~ break;
-				}
-				break;
-			
-			case '2':
-				printf("\tMODE UTILISATEUR\n");
-				//~ email mail;
-				//~ mail = saisieMail(fichier_mail);
-				//~ afficherMail(&mail);
-				//~ envoiReponseMail(fichier_keywords, mail, fichier_mailEnvoyes);
-
-				break;
-				
-			case 'q':
-			case 'Q':
-				printf("Porgramme fermé\n");
-				break;
-				
-			default :
-				printf("Commande inconnu [%c]\n",choixGeneral);
-				break;
-		}
-		printf("\n\n");
-	}while (choixGeneral != 'q' && choixGeneral != 'Q');
-}
 
