@@ -3,11 +3,34 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
-
-
+PERSONNAGE * lireSauvegarde(char * fichier)
+{
+	PERSONNAGE*liste;
+	FILE * fichier_ouvert = ouvrir(fichier);
+	fseek(fichier_ouvert ,0,SEEK_SET);
+	liste = fread(liste,sizeof(PERSONNAGE *),1,fichier_ouvert );
+	printf("Nom du personnage: %s\n",liste->nom);
+	fermer(fichier_ouvert);
+	return liste;
+}
+void sauvegarderFicher(PERSONNAGE * liste, char * fichier)
+{
+	char const *old_FileName = "personnage.bin";
+    char *new_FileName = "personnage2.bin";
+	FILE * fichier_ouvert = ouvrir(fichier);
+	FILE *new_FileCoordonnees=NULL;
+	new_FileCoordonnees = ouvrir(new_FileName);
+	fwrite(&liste,sizeof(PERSONNAGE),1,new_FileCoordonnees);
+	fermer(fichier_ouvert);
+	fermer(new_FileCoordonnees);
+	remove(old_FileName);
+    rename(new_FileName, old_FileName);
+    ouvrir("personnage.bin");
+ }
 PERSONNAGE*saisirElement(void)
 {
 	PERSONNAGE*new=malloc(sizeof(PERSONNAGE));
+	
 	if( new == NULL )
 	{
 		printf("Erreur allocation memoire dans saisirElement()\n");

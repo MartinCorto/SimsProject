@@ -77,15 +77,18 @@ void menuGeneral()
 					case 'a':
 					case 'A':					
 						liste=ajoutFin(liste,saisirElement());
+						sauvegarderFicher(liste,"personnage.bin");
 					break;
 					
 					case 'c':
 					case 'C':
+						lireSauvegarde("personnage.bin");
 						affiche(liste);
 					break;
 					
 					case 'l':
 					case 'L':
+						lireSauvegarde("personnage.bin");
 						lister(liste);
 					break;
 					
@@ -107,6 +110,7 @@ void menuGeneral()
 					case 's':
 					case 'S':
 						supprimerPersonnage(liste);
+						sauvegarderFicher(liste,"personnage.bin");
 					break;
 					
 					//~ case 'r':

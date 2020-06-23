@@ -26,7 +26,8 @@ typedef struct personnage
 	struct personnage *suiv;
 } PERSONNAGE;
 
-
+PERSONNAGE * lireSauvegarde(char * fichier);
+void sauvegarderFicher(PERSONNAGE * liste, char * fichier);
 PERSONNAGE*rechercherParNom(PERSONNAGE*liste,char*nom);
 PERSONNAGE*saisirElement(void);
 void supprimerPersonnage(PERSONNAGE *liste);
