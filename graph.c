@@ -237,6 +237,13 @@ void timePerso(PERSONNAGE * liste){
 	courant->caracteristiques.occup-=1;
 	courant->caracteristiques.occup= courant->caracteristiques.occup < 0 ? 0 : courant->caracteristiques.occup;
 	
+	if(courant->caracteristiques.occup == 0)
+	{
+		courant->caracteristiques.faim -=1;
+		courant->caracteristiques.sommeil -=1;
+		courant->caracteristiques.hygiene -=1;
+		courant->caracteristiques.moral -=1;
+	}
 	
 	while(courant->suiv != NULL){
 
@@ -244,9 +251,127 @@ void timePerso(PERSONNAGE * liste){
 		
 		courant->caracteristiques.occup-=1;
 		courant->caracteristiques.occup= courant->caracteristiques.occup < 0 ? 0 : courant->caracteristiques.occup;
-		
-		
-		
-
+		if(courant->caracteristiques.occup == 0)
+		{
+		courant->caracteristiques.faim -=1;
+		courant->caracteristiques.sommeil -=1;
+		courant->caracteristiques.hygiene -=1;
+		courant->caracteristiques.moral -=1;
+		}
 	}
 }
+
+
+void printConditionPerso(PERSONNAGE * liste){
+	if (liste == NULL)
+	{
+		return;
+	}
+	PERSONNAGE * courant;
+	courant=liste;
+
+//------------------FAIM----------------------
+	if(courant->caracteristiques.faim <= 80 && courant->caracteristiques.faim >= 60)
+	{
+		printf("%s : Hmm J'ai un peu faim, je devrais grignoter quelque chose\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.faim <= 60 && courant->caracteristiques.faim >= 40)
+	{
+		printf("%s : J'ai bien faim quand même\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.faim <= 40 && courant->caracteristiques.faim >= 20)
+	{
+		printf("%s : J'ai carrément la dalle !\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.faim <= 20 && courant->caracteristiques.faim >= 0)
+	{
+		printf("%s : Là par contre, je vais vraiment mourrir si je mange pas vite !!!\n", courant->nom);
+		courant->caracteristiques.sante -= 2;
+	}
+//------------------MORAL----------------------
+	if(courant->caracteristiques.moral <= 80 && courant->caracteristiques.moral >= 60)
+	{
+		printf("%s : Et si je sortait me promenner pour me ressourcer ?\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.moral <= 60 && courant->caracteristiques.moral >= 40)
+	{
+		printf("%s : Je devrais sortir boire un verre\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.moral <= 40 && courant->caracteristiques.moral >= 20)
+	{
+		printf("%s : Faut vraiment que je sorte voir mes amis, ils me remonteront bien le moral\n", courant->nom);
+	}
+	
+	
+//------------------argent----------------------
+	if(courant->caracteristiques.argent >= 300)
+	{
+		printf("%s : Je suis riche !\tJe vais en payer des tournées au bar pour les potes :) ! \n", courant->nom);
+	}
+	if(courant->caracteristiques.argent <= 80 && courant->caracteristiques.argent >= 60)
+	{
+		printf("%s : Bon je peux encore sortir quelques fois avec ce qu'il me reste dans mon porte monnaie\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.argent <= 60 && courant->caracteristiques.argent >= 40)
+	{
+		printf("%s : Faut que je fasse attention à mon argent\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.argent <= 40 && courant->caracteristiques.argent >= 20)
+	{
+		printf("%s : Je dois aller travailler, c'est la galère niveau thunes là\n", courant->nom);
+	}
+	
+//------------------sommeil----------------------
+	if(courant->caracteristiques.sommeil <= 80 && courant->caracteristiques.sommeil >= 60)
+	{
+		printf("%s : Je pourrais faire une petite sieste\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.sommeil <= 60 && courant->caracteristiques.sommeil >= 40)
+	{
+		printf("%s : Je devrais dormir pour me sentir mieux\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.sommeil <= 40 && courant->caracteristiques.sommeil >= 20)
+	{
+		printf("%s : Faut vraiment que je dorme sinon ma santé va en patir\n", courant->nom);
+		courant->caracteristiques.sante -= 3;
+	}
+	
+//------------------hygiene----------------------
+	if(courant->caracteristiques.hygiene <= 80 && courant->caracteristiques.hygiene >= 60)
+	{
+		printf("%s : Je pourrais rafraichir la barbe\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.hygiene <= 60 && courant->caracteristiques.hygiene >= 40)
+	{
+		printf("%s : Sa fait un bon moment que je me suis pas doucher, je devrais y aller\n", courant->nom);
+	}
+	
+	if(courant->caracteristiques.hygiene <= 40 && courant->caracteristiques.hygiene >= 20)
+	{
+		printf("%s : Bon là j'arrive à sentir ma propre odeur, faut que j'aille me laver\n", courant->nom);
+		courant->caracteristiques.sante -= 10;
+	}
+
+
+
+	
+	
+	
+	
+	
+	while(courant->suiv != NULL)
+	{
+		courant=courant->suiv;
+	}
+}
+

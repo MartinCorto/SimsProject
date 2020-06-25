@@ -8,3 +8,4 @@ void gestion(PERSONNAGE * sims, LIEU lieuCourant, LIEU place[7]);
 LIEU gestionLieu(LIEU place[7], LIEU courant, int x, int y);
 PERSONNAGE * gestionPerso(LIEU courant, PERSONNAGE *perso, int x ,int y);
 void timePerso(PERSONNAGE * liste);
+void printConditionPerso(PERSONNAGE * liste);

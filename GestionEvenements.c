@@ -21,19 +21,19 @@ LIEU initialisationCuisine(void)
 	
 	strcpy(cuisine.event[0].nom_evt, "Faire à manger");
 	cuisine.event[0].duree_evt = 0;
-	cuisine.event[0].sante = -5;
-	cuisine.event[0].prix = 0;
-	cuisine.event[0].sommeil = -5;
-	cuisine.event[0].moral = 0;
-	cuisine.event[0].faim = 0;
-	cuisine.event[0].hygiene = -1;
+	cuisine.event[0].sante = 10;
+	cuisine.event[0].prix = -2;
+	cuisine.event[0].sommeil = -10;
+	cuisine.event[0].moral = 2;
+	cuisine.event[0].faim = 1;
+	cuisine.event[0].hygiene = -2;
 	
 	strcpy(cuisine.event[1].nom_evt, "Manger");
 	cuisine.event[1].duree_evt = 0;
-	cuisine.event[1].sante = 10;
-	cuisine.event[1].prix = 0;
-	cuisine.event[1].sommeil = -3;
-	cuisine.event[1].moral = -5;
+	cuisine.event[1].sante = 20;
+	cuisine.event[1].prix = -4;
+	cuisine.event[1].sommeil = -6;
+	cuisine.event[1].moral = -10;
 	cuisine.event[1].faim = 25;
 	cuisine.event[1].hygiene = -2;
 	
@@ -42,8 +42,8 @@ LIEU initialisationCuisine(void)
 	evtCuisine3->sante = 10;
 	evtCuisine3->prix = 0;
 	evtCuisine3->sommeil = -3;
-	evtCuisine3->moral = 0;
-	evtCuisine3->faim = -2;
+	evtCuisine3->moral = 1;
+	evtCuisine3->faim = 5;
 	evtCuisine3->hygiene = 2;
 	cuisine.event[2] = *evtCuisine3;
 	
@@ -72,41 +72,41 @@ LIEU * initialisationChambre(LIEU * chambre)
 	
 	strcpy(evtChambre1->nom_evt, "Ranger la chambre");
 	evtChambre1->duree_evt = 1;
-	evtChambre1->sante = 1;
-	evtChambre1->prix = 1;
+	evtChambre1->sante = -1;
+	evtChambre1->prix = -1;
 	evtChambre1->sommeil = -1;
-	evtChambre1->moral = 0;
-	evtChambre1->faim = 1;
+	evtChambre1->moral = 2;
+	evtChambre1->faim = -1;
 	evtChambre1->hygiene = -1;
 	chambre->event[0] = *evtChambre1;
 	
 	strcpy(evtChambre2->nom_evt, "Dormir");
 	evtChambre2->duree_evt = 8;
 	evtChambre2->sante = 4;
-	evtChambre2->prix = 3;
-	evtChambre2->sommeil = 0;
-	evtChambre2->moral = 0;
+	evtChambre2->prix = 0;
+	evtChambre2->sommeil = 10;
+	evtChambre2->moral = 2;
 	evtChambre2->faim = -3;
-	evtChambre2->hygiene = 10;
+	evtChambre2->hygiene = -2;
 	chambre->event[1] = *evtChambre2;
 	
 	strcpy(evtChambre3->nom_evt, "Jouer à la play");
 	evtChambre3->duree_evt = 2;
 	evtChambre3->sante = 1;
 	evtChambre3->prix = 1;
-	evtChambre3->sommeil = 1;
-	evtChambre3->moral = 0;
-	evtChambre3->faim = 1;
+	evtChambre3->sommeil = -1;
+	evtChambre3->moral = 3;
+	evtChambre3->faim = -1;
 	evtChambre3->hygiene = -1;
 	chambre->event[2] = *evtChambre3;
 	
 	strcpy(evtChambre4->nom_evt, "Faire du sport");
 	evtChambre4->duree_evt = 2;
-	evtChambre4->sante = -2;
+	evtChambre4->sante = 5;
 	evtChambre4->prix = -5;
-	evtChambre4->sommeil = 2;
-	evtChambre4->moral = 0;
-	evtChambre4->faim = 5;
+	evtChambre4->sommeil = -2;
+	evtChambre4->moral = 6;
+	evtChambre4->faim = -5;
 	evtChambre4->hygiene = -5;
 	chambre->event[3] = *evtChambre4;
 	
@@ -126,52 +126,52 @@ LIEU * initialisationSalleDeBain(LIEU * salleDeBain)
 	
 	strcpy(evtSalleDeBain1->nom_evt, "Se laver");
 	evtSalleDeBain1->duree_evt = 1;
-	evtSalleDeBain1->sante = 0;
-	evtSalleDeBain1->prix = 10;
+	evtSalleDeBain1->sante = 2;
+	evtSalleDeBain1->prix = -1;
 	evtSalleDeBain1->sommeil = 2;
 	evtSalleDeBain1->moral = -1;
 	evtSalleDeBain1->faim = 1;
-	evtSalleDeBain1->hygiene = -1;
+	evtSalleDeBain1->hygiene = 5;
 	salleDeBain->event[0] = *evtSalleDeBain1;
 	
 	strcpy(evtSalleDeBain2->nom_evt, "Brosser les dents");
 	evtSalleDeBain2->duree_evt = 1;
-	evtSalleDeBain2->sante = 0;
-	evtSalleDeBain2->prix = 3;
+	evtSalleDeBain2->sante = 2;
+	evtSalleDeBain2->prix = -3;
 	evtSalleDeBain2->sommeil = 1;
 	evtSalleDeBain2->moral = 0;
 	evtSalleDeBain2->faim = 1;
-	evtSalleDeBain2->hygiene = 0;
+	evtSalleDeBain2->hygiene = 5;
 	salleDeBain->event[1] = *evtSalleDeBain2;
 	
 	strcpy(evtSalleDeBain3->nom_evt, "Aller aux toilettes");
 	evtSalleDeBain3->duree_evt = 1;
-	evtSalleDeBain3->sante = 0;
+	evtSalleDeBain3->sante = 2;
 	evtSalleDeBain3->prix = 2;
 	evtSalleDeBain3->sommeil = 1;
 	evtSalleDeBain3->moral = 0;
 	evtSalleDeBain3->faim = 1;
-	evtSalleDeBain3->hygiene = 1;
+	evtSalleDeBain3->hygiene = 5;
 	salleDeBain->event[2] = *evtSalleDeBain3;
 	
 	strcpy(evtSalleDeBain4->nom_evt, "Se raser");
 	evtSalleDeBain4->duree_evt = 2;
-	evtSalleDeBain4->sante = -2;
-	evtSalleDeBain4->prix = -5;
+	evtSalleDeBain4->sante = 2;
+	evtSalleDeBain4->prix = -2;
 	evtSalleDeBain4->sommeil = 2;
 	evtSalleDeBain4->moral = 0;
 	evtSalleDeBain4->faim = 5;
-	evtSalleDeBain4->hygiene = -5;
+	evtSalleDeBain4->hygiene = 5;
 	salleDeBain->event[3] = *evtSalleDeBain4;
 	
 	strcpy(evtSalleDeBain5->nom_evt, "Se coiffer");
 	evtSalleDeBain5->duree_evt = 1;
 	evtSalleDeBain5->sante = 1;
-	evtSalleDeBain5->prix = 1;
+	evtSalleDeBain5->prix = 0;
 	evtSalleDeBain5->sommeil = 2;
 	evtSalleDeBain5->moral = -1;
 	evtSalleDeBain5->faim = 1;
-	evtSalleDeBain5->hygiene = 0;
+	evtSalleDeBain5->hygiene = 5;
 	salleDeBain->event[4] = *evtSalleDeBain5;
 	
 	return salleDeBain;
@@ -293,7 +293,7 @@ LIEU * initialisationExterieur(LIEU * exterieur)
 	evtExterieur2->sante = 0;
 	evtExterieur2->prix = -10;
 	evtExterieur2->sommeil = 0;
-	evtExterieur2->moral = 3;
+	evtExterieur2->moral = 4;
 	evtExterieur2->faim = -2;
 	evtExterieur2->hygiene = 0;
 	exterieur->event[1] = *evtExterieur2;
@@ -323,7 +323,7 @@ LIEU * initialisationExterieur(LIEU * exterieur)
 	evtExterieur5->sante = -5;
 	evtExterieur5->prix = -20;
 	evtExterieur5->sommeil = -3;
-	evtExterieur5->moral = 3;
+	evtExterieur5->moral = 5;
 	evtExterieur5->faim = 0;
 	evtExterieur5->hygiene = -1;
 	exterieur->event[4] = *evtExterieur5;
@@ -377,17 +377,17 @@ LIEU * initialisationSalon(LIEU * salon)
 	evtSalon2->sante = -1;
 	evtSalon2->prix = 0;
 	evtSalon2->sommeil = -1;
-	evtSalon2->moral = 0;
+	evtSalon2->moral = 4;
 	evtSalon2->faim = -1;
-	evtSalon2->hygiene = 0;
+	evtSalon2->hygiene = 2;
 	salon->event[1] = *evtSalon2;
 	
 	strcpy(evtSalon3->nom_evt, "Faire le ménage");
 	evtSalon3->duree_evt = 3;
-	evtSalon3->sante = 1;
+	evtSalon3->sante = 2;
 	evtSalon3->prix = 0;
 	evtSalon3->sommeil = -2;
-	evtSalon3->moral = 3;
+	evtSalon3->moral = 7;
 	evtSalon3->faim = -2;
 	evtSalon3->hygiene = -1;
 	salon->event[2] = *evtSalon3;

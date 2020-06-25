@@ -50,6 +50,7 @@ void gestionEvenement(EvenementGfx evenement)
 	static LIEU lieuCourant;
 	static LIEU *place;
 	static clock_t prev_millis;
+	static clock_t prev_millisCondPerso;
 	switch (evenement)
 	{
 		case Initialisation:
@@ -63,6 +64,7 @@ void gestionEvenement(EvenementGfx evenement)
 			initialisationLieux(place);
 			lieuCourant=place[0];
 			prev_millis=clock();
+			prev_millisCondPerso=clock();
 			//image = lisBMPRGB("menu.bmp");
 			// Configure le systeme pour generer un message Temporisation
 			// toutes les 20 millisecondes
@@ -75,9 +77,18 @@ void gestionEvenement(EvenementGfx evenement)
 			{
 				prev_millis=clock();
 				timePerso(liste);
+				
+			}
+			if ((clock() - prev_millisCondPerso)/CLOCKS_PER_SEC > 6)
+			{
+				prev_millisCondPerso=clock();
+				printConditionPerso(liste);
 			}
 			// il faut redessiner la fenetre :
 			rafraichisFenetre();
+			
+			//~ printConditionPerso(liste);
+			
 			if (etat==2)
 			{
 				liste=ajoutFin(liste , saisirElement());
