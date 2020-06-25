@@ -1,9 +1,12 @@
 #include <stdlib.h> // Pour pouvoir utiliser exit()
 #include <stdio.h> // Pour pouvoir utiliser printf()
 #include <math.h> // Pour pouvoir utiliser sin() et cos()
+#include <time.h>
 #include "GfxLib.h" // Seul cet include est necessaire pour faire du graphique
 #include "BmpLib.h" // Cet include permet de manipuler des fichiers BMP
 #include "ESLib.h" // Pour utiliser valeurAleatoire()
+#include "Personnage.h"
+#include "GestionEvenements.h"
 #include "graph.h"
 
 
@@ -12,7 +15,7 @@
 #define HauteurFenetre 800
 
 // Fonction de trace de cercle
-void cercle(float centreX, float centreY, float rayon);
+//void cercle(float centreX, float centreY, float rayon);
 /* La fonction de gestion des evenements, appelee automatiquement par le systeme
 des qu'une evenement survient */
 void gestionEvenement(EvenementGfx evenement);
@@ -42,13 +45,24 @@ void gestionEvenement(EvenementGfx evenement)
 	static bool pleinEcran = false; // Pour savoir si on est en mode plein ecran ou pas
 	static DonneesImageRGB **fond = NULL; // L'image a afficher au centre de l'ecran
 	static int etat;
+	static PERSONNAGE*liste;
+	static PERSONNAGE* PersoCourant;
+	static LIEU lieuCourant;
+	static LIEU *place;
+	static clock_t prev_millis;
 	switch (evenement)
 	{
 		case Initialisation:
-			etat=1;
-			fond = malloc(2*sizeof(DonneesImageRGB *));
+			etat=0;//0: menu, 1 sims, 2 creation;
+			place=malloc(7*sizeof(LIEU));
+			fond = malloc(4*sizeof(DonneesImageRGB *));
 			fond[0]=lisBMPRGB("menu.bmp");
 			fond[1]=lisBMPRGB("sim.bmp");
+			fond[2]=lisBMPRGB("cree.bmp");
+			fond[3]=lisBMPRGB("supp.bmp");
+			initialisationLieux(place);
+			lieuCourant=place[0];
+			prev_millis=clock();
 			//image = lisBMPRGB("menu.bmp");
 			// Configure le systeme pour generer un message Temporisation
 			// toutes les 20 millisecondes
@@ -57,14 +71,22 @@ void gestionEvenement(EvenementGfx evenement)
 		
 		case Temporisation:
 
+			if ((clock() - prev_millis)/CLOCKS_PER_SEC > 1)
+			{
+				prev_millis=clock();
+				timePerso(liste);
+			}
 			// il faut redessiner la fenetre :
 			rafraichisFenetre();
-
+			if (etat==2)
+			{
+				liste=ajoutFin(liste , saisirElement());
+				etat=0;
+			}
 			break;
 			
 		case Affichage:
 
-			
 			// On part d'un fond d'ecran blanc
 
 				effaceFenetre(255,255,255);
@@ -74,7 +96,15 @@ void gestionEvenement(EvenementGfx evenement)
 					// On affiche l'image
 					ecrisImage(0, 0, fond[etat]->largeurImage, fond[etat]->hauteurImage, fond[etat]->donneesRGB);
 				}
-				
+				if (etat==0 || etat==3)
+				{
+					listeSims(liste);
+
+				}
+				if(etat==1){
+					gestion(PersoCourant, lieuCourant, place);
+				}
+
 			break;
 			
 		case Clavier:
@@ -82,12 +112,12 @@ void gestionEvenement(EvenementGfx evenement)
 
 			switch (caractereClavier())
 			{
-				case 'Q': /* Pour sortir quelque peu proprement du programme */
-				case 'q':
-					libereDonneesImageRGB(&fond); /* On libere la structure image,
-					c'est plus propre, meme si on va sortir du programme juste apres */
-					termineBoucleEvenements();
-					break;
+				//case 'Q': /* Pour sortir quelque peu proprement du programme */
+				//case 'q':
+				//	libereDonneesImageRGB(fond); /* On libere la structure image,
+				//	c'est plus propre, meme si on va sortir du programme juste apres */
+				//	termineBoucleEvenements();
+				//	break;
 
 				case 'F':
 				case 'f':
@@ -117,7 +147,8 @@ void gestionEvenement(EvenementGfx evenement)
 			printf("ASCII %d\n", toucheClavier());
 			break;
 
-		case BoutonSouris:
+		case BoutonSouris:					// On affiche l'image
+
 			if (etatBoutonSouris() == GaucheAppuye)
 			{
 				
@@ -127,7 +158,31 @@ void gestionEvenement(EvenementGfx evenement)
 			else if (etatBoutonSouris() == GaucheRelache)
 			{
 				printf("Bouton gauche relache en : (%d, %d)\n", abscisseSouris(), ordonneeSouris());
-				
+				etat=bouton1(etat, abscisseSouris(), ordonneeSouris());
+				etat=bouton2(etat, abscisseSouris(), ordonneeSouris());
+				if (etat==0 || etat==3)
+				{
+					PersoCourant=boutonSims(liste, abscisseSouris(),  ordonneeSouris());
+					if (PersoCourant != NULL )
+					{
+						if (etat==0)
+						{
+							etat=1;
+						}
+						if(etat==3){
+							liste=supprimerPersonnage(liste, PersoCourant);
+						}
+					}
+				}
+				if (etat==1)
+				{
+					lieuCourant=gestionLieu(place, lieuCourant, abscisseSouris(), ordonneeSouris());
+					if (PersoCourant->caracteristiques.occup == 0)
+					{
+						PersoCourant=gestionPerso(lieuCourant, PersoCourant,abscisseSouris() , ordonneeSouris() );
+					}
+					
+				}
 
 			}
 			break;

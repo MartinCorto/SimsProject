@@ -1,16 +1,21 @@
-sims: sims.o graph.o libisentlib.a
-	gcc -Wall sims.o graph.o -o sims libisentlib.a -lm -lglut -lGL -lX11
+sims: sims.o graph.o Personnage.o GestionEvenements.o libisentlib.a
+	gcc -Wall sims.o graph.o Personnage.o GestionEvenements.o -o sims libisentlib.a -lm -lglut -lGL -lX11
 # Sous MacOSX, commenter la ligne de commande ci-dessus (en mettant un # au debut)
 # et de-commenter la ligne de commande ci-apres :
 #	gcc -Wall exemple.o -o exemple libisentlib.a -lm -framework OpenGL -framework GLUT
 
 sims.o: sims.c graph.h GfxLib.h BmpLib.h ESLib.h
 	gcc -Wall -c -g sims.c
-	
-graph.o: graph.c graph.h GfxLib.h
-	gcc -Wall -c -g graph.c
-			
 
+graph.o: graph.c graph.h Personnage.h GestionEvenements.h GfxLib.h
+	gcc -Wall -c -g graph.c
+	
+Personnage.o: Personnage.c Personnage.h
+	gcc -Wall -c -g Personnage.c
+				
+GestionEvenements.o: GestionEvenements.c GestionEvenements.h
+	gcc -Wall -c -g GestionEvenements.c
+	
 libisentlib.a: BmpLib.o ErreurLib.o ESLib.o GfxLib.o OutilsLib.o SocketLib.o ThreadLib.o TortueLib.o VectorLib.o WavLib.o
 	ar r libisentlib.a BmpLib.o ErreurLib.o ESLib.o GfxLib.o OutilsLib.o SocketLib.o ThreadLib.o TortueLib.o VectorLib.o WavLib.o
 	ranlib libisentlib.a
